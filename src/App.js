@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
