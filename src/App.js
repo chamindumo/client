@@ -30,26 +30,23 @@ function App() {
   };
 
   useEffect(() => {
-    if (session) {
-      // Fetch events from Google Calendar API
+     // Fetch events from Google Calendar API
       fetchGoogleCalendarEvents();
-    }
-  }, [session]);
+    
+  });
 
     
-   if(isLoading){
-    return<></>
-  }
+   
   async function fetchGoogleCalendarEvents() {
+    const access_Token = 'ya29.a0Ad52N38kdK13QJKzW_33njC6yuvv3InVERnVtQkInC07ILFhSJWFcANloOqiSRRjK-21X0i-LdmIjQpL_c3Mnsswrx8V74N18rBnuDYV6my3bK5-9RgDVGOlGKbmbF0ryKUPW0QBul74GqLIZQ64QHi6-ji25TO4d-QaCgYKAWoSARESFQHGX2MiolryyRXry1gnGvj0fIG_eg0170'
     try {
       const response = await fetch('https://www.googleapis.com/calendar/v3/calendars/primary/events', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${session.provider_token}`
+          'Authorization': `Bearer ${access_Token}`
         }
       });
-
       if (!response.ok) {
         throw new Error('Failed to fetch calendar events');
       }
@@ -80,6 +77,8 @@ function App() {
     }
   }
 async function createCalenderEvent(){
+  const access_Token = 'ya29.a0Ad52N38kdK13QJKzW_33njC6yuvv3InVERnVtQkInC07ILFhSJWFcANloOqiSRRjK-21X0i-LdmIjQpL_c3Mnsswrx8V74N18rBnuDYV6my3bK5-9RgDVGOlGKbmbF0ryKUPW0QBul74GqLIZQ64QHi6-ji25TO4d-QaCgYKAWoSARESFQHGX2MiolryyRXry1gnGvj0fIG_eg0170'
+
   console.log("create calender event")
   const newEvent = {
     title: "busy",
@@ -108,7 +107,7 @@ async function createCalenderEvent(){
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${session.provider_token}`
+        'Authorization': `Bearer ${access_Token}`
       },
       body: JSON.stringify(event)
     });
@@ -140,10 +139,7 @@ async function createCalenderEvent(){
   return (
     <div className="App">
       <div style={{width:"400px",margin:"30px auto"}}>
-        {session ?
-        
-      <>
-     <h2>hey there {session.user.email}</h2>
+       
      <Calendar
               localizer={localizer}
               events={events} // Pass the events array to the Calendar component
@@ -166,16 +162,9 @@ async function createCalenderEvent(){
             <input type = "text" onChange={(e)=> setEventDescription(e.target.value)} />
             <button onClick={()=> createCalenderEvent()}>create event </button>
 
-            <button onClick={() => Signout()}>Sign out</button>
 
 
-      </>
-      :
-      <>
-      <button onClick={()=> googleSignIn()}>Sign in with google</button>
-      </>
-      }
-
+     
       </div>
     </div>
   );
